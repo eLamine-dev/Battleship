@@ -3,6 +3,7 @@ import Ship from './ship';
 export default class Board {
    constructor(size) {
       this.board = this.createBoard(size);
+      this.ships = [];
    }
 
    createBoard(size) {
@@ -30,6 +31,7 @@ export default class Board {
          const square = this.board.get(`${x + i}-${y}`);
          square.ship = ship;
       }
+      this.ships.push(ship);
    }
 
    allSquaresAvailable(shipLength, x, y) {
@@ -40,6 +42,15 @@ export default class Board {
       }
 
       return result;
+   }
+
+   getNonAttackedSquares() {
+      const nonAttackedSquares = new Map();
+
+      this.board.forEach((value, key) => {
+         if (!value.isShot) nonAttackedSquares.set(key, value);
+      });
+      return nonAttackedSquares;
    }
 
    receiveAttack(x, y) {
