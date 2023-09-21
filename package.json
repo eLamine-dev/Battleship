@@ -4,9 +4,9 @@
    "description": "",
    "main": "index.js",
    "scripts": {
-      "test": "jest",
+      "test": "jest --watch",
       "build": "webpack",
-      "watch": "jest --watch",
+      "watch": "webpack --watch",
       "deploy-demo": "git push origin :gh-pages && git subtree push --prefix dist origin gh-pages"
    },
    "author": "",

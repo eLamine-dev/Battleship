@@ -2,6 +2,7 @@ import Board from './board';
 
 test('board creation', () => {
    let myBoard = new Board(10);
+   console.log(myBoard);
    expect(myBoard.squares.get('0-0')).toMatchObject({
       x: 0,
       y: 0,
