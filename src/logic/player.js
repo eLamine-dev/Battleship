@@ -3,7 +3,7 @@ export default class Player {
       this.type = type;
    }
 
-   play(board, x, y) {
+   attack(board, x, y) {
       if (this.type === 'computer') {
          this.computerAttack(board);
       } else {
@@ -17,7 +17,7 @@ export default class Player {
 
    computerAttack(board) {
       const nonAttackedSquares = board.getNonAttackedSquares();
-      let keys = Array.from(board.board.keys());
+      let keys = Array.from(board.squares.keys());
       const randomKey = keys[Math.floor(Math.random() * keys.length)];
       const randomSquare = nonAttackedSquares.get(randomKey);
       board.receiveAttack(randomSquare.x, randomSquare.y);
