@@ -1,3 +1,5 @@
+import pubsub from '../utils/pubSub';
+
 export default class BoardView extends HTMLElement {
    constructor(board) {
       super();
@@ -6,6 +8,7 @@ export default class BoardView extends HTMLElement {
 
    connectedCallback() {
       this.render();
+      this.addEventListeners();
    }
 
    render() {
@@ -15,7 +18,6 @@ export default class BoardView extends HTMLElement {
          this.board.size
       );
       const coords = Array.from(this.board.squares.keys());
-      console.log(coords);
 
       for (let i = 0; i < coords.length; i += this.board.size) {
          const column = document.createElement('div');
@@ -23,12 +25,57 @@ export default class BoardView extends HTMLElement {
          this.appendChild(column);
 
          for (let j = i; j < i + this.board.size; j += 1) {
-            let square = document.createElement('div');
+            const square = document.createElement('div');
             square.classList.add('square');
+            square.setAttribute('data-coords', coords[j]);
             square.innerText = `${coords[j]}`;
 
             column.prepend(square);
          }
+      }
+   }
+
+   addEventListeners() {
+      this.addEventListener('click', (event) => {
+         if (!event.target.classList.contains('square')) return;
+         const coords = event.target.getAttribute('data-coords');
+         if (this.classList.contains('battle-started')) {
+            pubsub.publish('square-attacked', coords);
+         }
+      });
+
+      const squares = document.querySelectorAll('.square');
+
+      squares.forEach((square) => {
+         square.addEventListener('dragenter', dragEnter);
+         square.addEventListener('dragover', dragOver);
+         square.addEventListener('dragleave', dragLeave);
+         square.addEventListener('drop', drop);
+      });
+
+      function dragEnter(e) {
+         e.preventDefault();
+         e.target.classList.add('drag-over');
+      }
+
+      function dragOver(e) {
+         e.preventDefault();
+         e.target.classList.add('drag-over');
+      }
+
+      function dragLeave(e) {
+         e.target.classList.remove('drag-over');
+      }
+
+      function drop(e) {
+         e.target.classList.remove('drag-over');
+
+         const id = e.dataTransfer.getData('text/plain');
+         const draggable = document.getElementById(id);
+
+         e.target.appendChild(draggable);
+
+         draggable.classList.remove('hide');
       }
    }
 }
