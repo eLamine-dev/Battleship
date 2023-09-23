@@ -17,7 +17,7 @@ export default class BoardView extends HTMLElement {
          '--board-size',
          this.board.size
       );
-      const coords = Array.from(this.board.squares.keys());
+      const coords = Array.from(this.board.squares.values());
 
       for (let i = 0; i < coords.length; i += this.board.size) {
          const column = document.createElement('div');
@@ -27,8 +27,11 @@ export default class BoardView extends HTMLElement {
          for (let j = i; j < i + this.board.size; j += 1) {
             const square = document.createElement('div');
             square.classList.add('square');
-            square.setAttribute('data-coords', coords[j]);
-            square.innerText = `${coords[j]}`;
+            square.setAttribute('x', coords[j].x);
+            square.setAttribute('y', coords[j].y);
+            square.id = `sq-${coords[j].x}-${coords[j].y}`;
+            square.setAttribute('data-coords', `${coords[j].x}-${coords[j].y}`);
+            square.innerText = `${coords[j].x}-${coords[j].y}`;
 
             column.prepend(square);
          }
@@ -47,14 +50,15 @@ export default class BoardView extends HTMLElement {
       const squares = document.querySelectorAll('.square');
 
       squares.forEach((square) => {
-         square.addEventListener('dragenter', dragEnter);
-         square.addEventListener('dragover', dragOver);
-         square.addEventListener('dragleave', dragLeave);
-         square.addEventListener('drop', drop);
+         square.addEventListener('dragenter', dragEnter.bind(this));
+         square.addEventListener('dragover', dragOver.bind(this));
+         square.addEventListener('dragleave', dragLeave.bind(this));
+         square.addEventListener('drop', drop.bind(this));
       });
 
       function dragEnter(e) {
          e.preventDefault();
+
          e.target.classList.add('drag-over');
       }
 
@@ -70,10 +74,25 @@ export default class BoardView extends HTMLElement {
       function drop(e) {
          e.target.classList.remove('drag-over');
 
-         const id = e.dataTransfer.getData('text/plain');
-         const draggable = document.getElementById(id);
+         const ShipData = JSON.parse(e.dataTransfer.getData('text/plain'));
 
-         e.target.appendChild(draggable);
+         const draggable = document.getElementById(ShipData.id);
+         draggable.classList.add('placed');
+
+         let anchorDropCoords = {
+            x: Number(e.target.getAttribute('x')),
+            y: Number(e.target.getAttribute('y')),
+         };
+
+         const shipBowCoords = `${anchorDropCoords.x - ShipData.anchor}-${
+            anchorDropCoords.y
+         }`;
+
+         const shipBowSquare = this.querySelector(`
+            .square[data-coords="${shipBowCoords}"]`);
+         shipBowSquare.style.position = 'relative';
+
+         shipBowSquare.appendChild(draggable);
 
          draggable.classList.remove('hide');
       }
