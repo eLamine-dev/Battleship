@@ -50,41 +50,61 @@ export default class BoardView extends HTMLElement {
       const squares = document.querySelectorAll('.square');
 
       squares.forEach((square) => {
-         square.addEventListener('dragenter', dragEnter.bind(this));
+         square.addEventListener('dragenter', dragOver.bind(this));
          square.addEventListener('dragover', dragOver.bind(this));
          square.addEventListener('dragleave', dragLeave.bind(this));
          square.addEventListener('drop', drop.bind(this));
       });
 
-      function dragEnter(e) {
-         e.preventDefault();
+      let shipData = {};
+      this.addEventListener('dragenter', setShipData);
 
-         e.target.classList.add('drag-over');
+      function setShipData(e) {
+         shipData = JSON.parse(e.dataTransfer.getData('text/plain'));
       }
 
       function dragOver(e) {
          e.preventDefault();
-         e.target.classList.add('drag-over');
+         e.preventDefault();
+         const anchorHoverCoords = {
+            x: Number(e.target.getAttribute('x')),
+            y: Number(e.target.getAttribute('y')),
+         };
+
+         for (let i = 0; i < shipData.length; i += 1) {
+            // let j = i - shipData.anchor;
+            let coords = `${anchorHoverCoords.x + i - shipData.anchor}-${
+               anchorHoverCoords.y
+            }`;
+            this.querySelector(
+               `.square[data-coords="${coords}"]`
+            ).classList.add('drag-over');
+            console.log(coords);
+         }
+
+         // e.target.classList.add('drag-over');
       }
 
       function dragLeave(e) {
-         e.target.classList.remove('drag-over');
+         this.querySelectorAll('.square').forEach((square) => {
+            square.classList.remove('drag-over');
+         });
+
+         // e.target.classList.remove('drag-over');
       }
 
       function drop(e) {
          e.target.classList.remove('drag-over');
 
-         const ShipData = JSON.parse(e.dataTransfer.getData('text/plain'));
-
-         const draggable = document.getElementById(ShipData.id);
+         const draggable = document.getElementById(shipData.id);
          draggable.classList.add('placed');
 
-         let anchorDropCoords = {
+         const anchorDropCoords = {
             x: Number(e.target.getAttribute('x')),
             y: Number(e.target.getAttribute('y')),
          };
 
-         const shipBowCoords = `${anchorDropCoords.x - ShipData.anchor}-${
+         const shipBowCoords = `${anchorDropCoords.x - shipData.anchor}-${
             anchorDropCoords.y
          }`;
 

@@ -34,7 +34,7 @@ export default class ShipView extends HTMLElement {
       this.addEventListener('dragstart', (e) => {
          const ShipData = {
             id: e.target.id,
-            shipLength: this.length,
+            length: this.length,
             anchor: Number(
                this.querySelector('.anchor').getAttribute('ship-part')
             ),
