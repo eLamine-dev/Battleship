@@ -50,45 +50,67 @@ export default class BoardView extends HTMLElement {
       const squares = document.querySelectorAll('.square');
 
       squares.forEach((square) => {
+         square.addEventListener('dragenter', getDropData.bind(this));
          square.addEventListener('dragenter', dragOver.bind(this));
          square.addEventListener('dragover', dragOver.bind(this));
          square.addEventListener('dragleave', dragLeave.bind(this));
          square.addEventListener('drop', drop.bind(this));
       });
 
-      let shipData = {};
-      this.addEventListener('dragenter', setShipData);
+      let dropData = {
+         ship: null,
+         squaresToTake: [],
+         canPlaceShip: false,
+      };
 
-      function setShipData(e) {
-         shipData = JSON.parse(e.dataTransfer.getData('text/plain'));
-      }
+      // this.addEventListener('dragenter', getShipData);
 
-      function dragOver(e) {
-         e.preventDefault();
-         e.preventDefault();
-         const anchorHoverCoords = {
+      // function getShipData(e) {}
+
+      function getDropData(e) {
+         dropData.ship = JSON.parse(e.dataTransfer.getData('text/plain'));
+         dropData.squaresToTake.splice(0, dropData.squaresToTake.length);
+         const anchorCoords = {
             x: Number(e.target.getAttribute('x')),
             y: Number(e.target.getAttribute('y')),
          };
 
-         for (let i = 0; i < shipData.length; i += 1) {
-            // let j = i - shipData.anchor;
-            let coords = `${anchorHoverCoords.x + i - shipData.anchor}-${
-               anchorHoverCoords.y
+         for (let i = 0; i < dropData.ship.length; i += 1) {
+            const coords = `${anchorCoords.x + i - dropData.ship.anchor}-${
+               anchorCoords.y
             }`;
-            this.querySelector(
-               `.square[data-coords="${coords}"]`
-            ).classList.add('drag-over');
-            console.log(coords);
+            if (this.board.squares.has(coords)) {
+               const square = this.querySelector(
+                  `.square[data-coords="${coords}"]`
+               );
+               dropData.squaresToTake.push(square);
+            }
          }
+         if (dropData.squaresToTake.length === dropData.ship.length) {
+            dropData.canPlaceShip = true;
+         } else {
+            dropData.canPlaceShip = false;
+         }
+      }
 
-         // e.target.classList.add('drag-over');
+      function dragOver(e) {
+         e.preventDefault();
+
+         if (!dropData.canPlaceShip) return;
+
+         dropData.squaresToTake.forEach((square) => {
+            square.classList.add('drag-over');
+            square.setAttribute('occupied-by', dropData.ship.id);
+         });
       }
 
       function dragLeave(e) {
-         this.querySelectorAll('.square').forEach((square) => {
-            square.classList.remove('drag-over');
-         });
+         this.querySelectorAll(`[occupied-by="${dropData.ship.id}"]`).forEach(
+            (square) => {
+               square.removeAttribute('occupied-by');
+               square.classList.remove('drag-over');
+            }
+         );
 
          // e.target.classList.remove('drag-over');
       }
@@ -96,20 +118,16 @@ export default class BoardView extends HTMLElement {
       function drop(e) {
          e.target.classList.remove('drag-over');
 
-         const draggable = document.getElementById(shipData.id);
+         if (!dropData.canPlaceShip) return;
+
+         dropData.squaresToTake.forEach((square) => {
+            square.classList.remove('drag-over');
+         });
+
+         const draggable = document.getElementById(dropData.ship.id);
          draggable.classList.add('placed');
 
-         const anchorDropCoords = {
-            x: Number(e.target.getAttribute('x')),
-            y: Number(e.target.getAttribute('y')),
-         };
-
-         const shipBowCoords = `${anchorDropCoords.x - shipData.anchor}-${
-            anchorDropCoords.y
-         }`;
-
-         const shipBowSquare = this.querySelector(`
-            .square[data-coords="${shipBowCoords}"]`);
+         const shipBowSquare = dropData.squaresToTake[0];
          shipBowSquare.style.position = 'relative';
 
          shipBowSquare.appendChild(draggable);

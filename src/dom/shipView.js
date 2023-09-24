@@ -11,7 +11,7 @@ export default class ShipView extends HTMLElement {
    connectedCallback() {}
 
    render() {
-      this.id = `ship-${this.length}`;
+      this.id = Date.now();
       this.classList.add('ship');
       this.draggable = true;
       // this.style.position = 'absolute';
