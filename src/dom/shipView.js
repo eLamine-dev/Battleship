@@ -5,16 +5,16 @@ export default class ShipView extends HTMLElement {
       super();
       this.length = length;
       this.render();
+
       this.addEventListeners();
    }
 
-   connectedCallback() {}
+   // connectedCallback() {}
 
    render() {
       this.id = Date.now();
       this.classList.add('ship');
       this.draggable = true;
-      // this.style.position = 'absolute';
       this.style.gridTemplateColumns = `repeat(${this.length}, 1fr)`;
       for (let i = 0; i < this.length; i += 1) {
          const square = document.createElement('div');
@@ -31,8 +31,9 @@ export default class ShipView extends HTMLElement {
          });
          e.target.classList.add('anchor');
       });
+
       this.addEventListener('dragstart', (e) => {
-         const ShipData = {
+         let ShipData = {
             id: e.target.id,
             length: this.length,
             anchor: Number(

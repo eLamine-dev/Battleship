@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
    const myBoard = new Board(10);
    const myBoardView = new BoardView(myBoard);
    const myShip = new ShipView(5);
+   const myShip2 = new ShipView(4);
    document.body.appendChild(myBoardView);
    document.body.appendChild(myShip);
+   document.body.appendChild(myShip2);
 });

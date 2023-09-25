@@ -70,7 +70,7 @@ export default class Board {
    placeShipsRandomly() {
       const ships = [5, 4, 3, 3, 2];
       for (let i = 0; i < ships.length; i++) {
-         let shipLength = ships[i];
+         const shipLength = ships[i];
          let x = Math.floor(Math.random() * 10);
          let y = Math.floor(Math.random() * 10);
          while (!this.allSquaresAvailable(shipLength, x, y)) {

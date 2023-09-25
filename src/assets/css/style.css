@@ -37,7 +37,8 @@ body {
 
 .ship {
    display: grid;
-   gap: 2px;
+   gap: 1px;
+   z-index: 10;
 }
 
 .ship.placed {
@@ -49,7 +50,7 @@ body {
 .ship-square {
    height: 50px;
    width: 50px;
-   background-color: blue;
+   background-color: rgba(255, 0, 0, 0.515);
 }
 
 .hide {
