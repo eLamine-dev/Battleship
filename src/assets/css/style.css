@@ -35,6 +35,10 @@ body {
    background-color: rgb(72, 0, 255);
 }
 
+.square:not([occupied-by='null']) {
+   background-color: black;
+}
+
 .ship {
    display: grid;
    gap: 1px;

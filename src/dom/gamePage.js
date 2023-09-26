@@ -21,8 +21,8 @@ export default class GamePage extends HTMLElement {
       );
 
       this.appendChild(computerBoard);
-      this.appendChild(humanBoard);
-      this.appendChild(shipsContainer);
+      // this.appendChild(humanBoard);
+      // this.appendChild(shipsContainer);
    }
 }
 

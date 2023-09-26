@@ -28,21 +28,10 @@ export default class Board {
          throw new Error('Not enough space');
       }
 
-      for (let i = 0; i < ship.length; i++) {
+      for (let i = 0; i < ship.length; i += 1) {
          const square = this.squares.get(`${x + i}-${y}`);
          square.ship = ship.id;
       }
-      this.ships.push(ship);
-   }
-
-   allSquaresAvailable(shipLength, x, y) {
-      let result = true;
-      for (let i = 0; i < shipLength; i++) {
-         const square = this.squares.get(`${x + i}-${y}`);
-         if (!square || square.ship !== null) result = false;
-      }
-
-      return result;
    }
 
    getNonAttackedSquares() {
@@ -72,17 +61,26 @@ export default class Board {
       return result;
    }
 
+   allSquaresAvailable(shipLength, x, y) {
+      let result = true;
+      for (let i = 0; i < shipLength; i++) {
+         const square = this.squares.get(`${x + i}-${y}`);
+         if (!square || square.ship !== null) result = false;
+      }
+
+      return result;
+   }
+
    placeShipsRandomly() {
-      const ships = [5, 4, 3, 3, 2];
-      for (let i = 0; i < ships.length; i++) {
-         const shipLength = ships[i];
+      for (let i = 0; i < this.ships.length; i += 1) {
+         const shipLength = this.ships[i].length;
          let x = Math.floor(Math.random() * 10);
          let y = Math.floor(Math.random() * 10);
          while (!this.allSquaresAvailable(shipLength, x, y)) {
             x = Math.floor(Math.random() * 10);
             y = Math.floor(Math.random() * 10);
          }
-         this.placeShip(shipLength, x, y);
+         this.placeShip(this.ships[i], x, y);
       }
       this.ready = true;
    }

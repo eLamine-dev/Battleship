@@ -32,7 +32,8 @@ export default class BoardView extends HTMLElement {
             square.id = `sq-${coords[j].x}-${coords[j].y}`;
             square.setAttribute('data-coords', `${coords[j].x}-${coords[j].y}`);
             square.innerText = `${coords[j].x}-${coords[j].y}`;
-            square.setAttribute('occupied-by', null);
+            square.setAttribute('occupied-by', coords[j].ship);
+
             column.prepend(square);
          }
       }
