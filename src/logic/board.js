@@ -3,29 +3,33 @@ import Ship from './ship';
 export default class Board {
    constructor(size) {
       this.size = size;
-      this.squares = this.createBoard(size);
-      this.ships = [];
+      this.squares = this.createBoard();
+      this.createShips();
    }
 
-   createBoard(size) {
+   createBoard() {
       const squares = new Map();
-      for (let i = 0; i < size; i++) {
-         for (let j = 0; j < size; j++) {
+      for (let i = 0; i < this.size; i += 1) {
+         for (let j = 0; j < this.size; j += 1) {
             squares.set(`${i}-${j}`, { x: i, y: j, isShot: false, ship: null });
          }
       }
       return squares;
    }
 
-   placeShip(shipLength, x, y) {
-      if (!this.allSquaresAvailable(shipLength, x, y)) {
+   createShips() {
+      const shipLengths = [5, 3, 3, 2, 2];
+      this.ships = shipLengths.map((shipLength) => new Ship(shipLength));
+   }
+
+   placeShip(ship, x, y) {
+      if (!this.allSquaresAvailable(ship.length, x, y)) {
          throw new Error('Not enough space');
       }
 
-      const ship = new Ship(shipLength);
-      for (let i = 0; i < shipLength; i++) {
+      for (let i = 0; i < ship.length; i++) {
          const square = this.squares.get(`${x + i}-${y}`);
-         square.ship = ship;
+         square.ship = ship.id;
       }
       this.ships.push(ship);
    }
@@ -53,7 +57,7 @@ export default class Board {
       const square = this.squares.get(`${x}-${y}`);
       square.isShot = true;
       if (square.ship) {
-         square.ship.hit();
+         this.ships.find((ship) => ship.id === square.ship).hit();
       }
    }
 

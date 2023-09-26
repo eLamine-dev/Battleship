@@ -1,7 +1,9 @@
 import Ship from './ship';
+import { validate as uuidValidate } from 'uuid';
 
 test('ship creation', () => {
    const testShip = new Ship(3);
+   expect(uuidValidate(testShip.id)).toBe(true);
    expect(testShip.length).toBe(3);
    expect(testShip.hits).toBe(0);
    expect(testShip.sunk).toBe(false);

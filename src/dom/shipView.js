@@ -45,6 +45,10 @@ export default class ShipView extends HTMLElement {
             e.target.classList.add('hide');
          }, 0);
       });
+
+      this.addEventListener('dragend', (e) => {
+         e.target.classList.remove('hide');
+      });
    }
 }
 
