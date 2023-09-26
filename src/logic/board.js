@@ -5,6 +5,7 @@ export default class Board {
       this.size = size;
       this.squares = this.createBoard();
       this.createShips();
+      this.ready = false;
    }
 
    createBoard() {
@@ -18,7 +19,7 @@ export default class Board {
    }
 
    createShips() {
-      const shipLengths = [5, 3, 3, 2, 2];
+      const shipLengths = [5, 4, 3, 3, 2, 2];
       this.ships = shipLengths.map((shipLength) => new Ship(shipLength));
    }
 
@@ -83,5 +84,6 @@ export default class Board {
          }
          this.placeShip(shipLength, x, y);
       }
+      this.ready = true;
    }
 }

@@ -1,22 +1,19 @@
-import Ship from '../logic/ship';
-
 export default class ShipView extends HTMLElement {
-   constructor(length) {
+   constructor(ship) {
       super();
-      this.length = length;
+      this.ship = ship;
       this.render();
-
       this.addEventListeners();
    }
 
    // connectedCallback() {}
 
    render() {
-      this.id = Date.now();
+      this.id = this.ship.id;
       this.classList.add('ship');
       this.draggable = true;
-      this.style.gridTemplateColumns = `repeat(${this.length}, 1fr)`;
-      for (let i = 0; i < this.length; i += 1) {
+      this.style.gridTemplateColumns = `repeat(${this.ship.length}, 1fr)`;
+      for (let i = 0; i < this.ship.length; i += 1) {
          const square = document.createElement('div');
          square.classList.add('ship-square');
          square.setAttribute('ship-part', `${i}`);
@@ -35,7 +32,7 @@ export default class ShipView extends HTMLElement {
       this.addEventListener('dragstart', (e) => {
          let ShipData = {
             id: e.target.id,
-            length: this.length,
+            length: this.ship.length,
             anchor: Number(
                this.querySelector('.anchor').getAttribute('ship-part')
             ),

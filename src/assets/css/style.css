@@ -38,6 +38,7 @@ body {
 .ship {
    display: grid;
    gap: 1px;
+   justify-content: center;
    z-index: 10;
 }
 
@@ -51,6 +52,13 @@ body {
    height: 50px;
    width: 50px;
    background-color: rgba(255, 0, 0, 0.515);
+}
+
+.ships-container {
+   display: flex;
+   align-items: flex-start;
+   flex-direction: column;
+   gap: 3px;
 }
 
 .hide {

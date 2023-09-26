@@ -33,7 +33,6 @@ export default class BoardView extends HTMLElement {
             square.setAttribute('data-coords', `${coords[j].x}-${coords[j].y}`);
             square.innerText = `${coords[j].x}-${coords[j].y}`;
             square.setAttribute('occupied-by', null);
-
             column.prepend(square);
          }
       }
@@ -48,7 +47,9 @@ export default class BoardView extends HTMLElement {
          }
       });
 
-      const squares = document.querySelectorAll('.square');
+      if (this.board.ready) return;
+
+      const squares = this.querySelectorAll('.square');
 
       squares.forEach((square) => {
          square.addEventListener('dragenter', getDropData.bind(this));

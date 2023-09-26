@@ -17,7 +17,7 @@ export default class Player {
 
    computerAttack(board) {
       const nonAttackedSquares = board.getNonAttackedSquares();
-      let keys = Array.from(board.squares.keys());
+      const keys = Array.from(board.squares.keys());
       const randomKey = keys[Math.floor(Math.random() * keys.length)];
       const randomSquare = nonAttackedSquares.get(randomKey);
       board.receiveAttack(randomSquare.x, randomSquare.y);

@@ -8,6 +8,7 @@ export default class Game {
       this.humanBoard = new Board(10);
       this.human = new Player('human');
       this.computer = new Player('computer');
+      this.computerBoard.placeShipsRandomly();
    }
 
    initializeListeners() {
@@ -16,7 +17,6 @@ export default class Game {
    }
 
    startGame(humanShipsCoordinates) {
-      this.computerBoard.placeShipsRandomly();
       this.humanBoard.placeShips(humanShipsCoordinates);
       this.currentPlayer = this.human;
    }
