@@ -40,27 +40,30 @@ export default class BoardView extends HTMLElement {
    }
 
    addEventListeners() {
-      this.addEventListener('click', (event) => {
-         if (!event.target.classList.contains('square')) return;
-         const coords = event.target.getAttribute('data-coords');
-         if (this.classList.contains('battle-started')) {
-            pubsub.publish('square-attacked', coords);
-         }
-      });
+      if (this.board.player.type === 'computer') {
+         this.addEventListener('click', (event) => {
+            if (!event.target.classList.contains('square')) return;
 
-      if (this.board.ready) return;
+            const coords = event.target.getAttribute('data-coords');
+            console.log(coords);
+            if (this.classList.contains('battle-started')) {
+               pubsub.publish('square-attacked', coords);
+            }
+         });
+      }
 
       const squares = this.querySelectorAll('.square');
+      if (this.board.player.type === 'human') {
+         squares.forEach((square) => {
+            square.addEventListener('dragenter', getDropData.bind(this));
+            square.addEventListener('dragenter', dragOver.bind(this));
+            square.addEventListener('dragover', dragOver.bind(this));
+            square.addEventListener('dragleave', dragLeave.bind(this));
+            square.addEventListener('drop', drop.bind(this));
+         });
+      }
 
-      squares.forEach((square) => {
-         square.addEventListener('dragenter', getDropData.bind(this));
-         square.addEventListener('dragenter', dragOver.bind(this));
-         square.addEventListener('dragover', dragOver.bind(this));
-         square.addEventListener('dragleave', dragLeave.bind(this));
-         square.addEventListener('drop', drop.bind(this));
-      });
-
-      let dropData = {
+      const dropData = {
          ship: null,
          squaresToTake: [],
          canPlaceShip: false,

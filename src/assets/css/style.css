@@ -3,6 +3,8 @@
 }
 
 body {
+   height: 100vh;
+   width: 100vw;
    display: flex;
    align-items: center;
    justify-content: center;
@@ -71,4 +73,37 @@ body {
 
 .drag-over {
    background-color: red;
+}
+
+app-container {
+   display: grid;
+   grid-template-columns: auto auto;
+   align-items: center;
+   gap: 3rem;
+}
+.board-container {
+   display: flex;
+   flex-direction: column;
+}
+
+.board-header {
+   height: 5rem;
+   display: grid;
+   grid-template-columns: 3rem 1fr 3rem;
+   grid-template-rows: 1fr 1fr;
+}
+
+.leader-avatar,
+.strategist-avatar {
+   grid-row: 1/3;
+   border: solid black 1px;
+}
+
+.leader-message,
+.strategist-message {
+   grid-column: 2/3;
+}
+
+.strategist-avatar {
+   grid-column: 3/4;
 }
