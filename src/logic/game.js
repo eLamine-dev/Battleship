@@ -4,10 +4,10 @@ import Board from './board';
 
 export default class Game {
    constructor() {
-      this.computerBoard = new Board(10);
-      this.humanBoard = new Board(10);
       this.human = new Player('human');
       this.computer = new Player('computer');
+      this.computerBoard = new Board(10, this.computer);
+      this.humanBoard = new Board(10, this.human);
       this.computerBoard.placeShipsRandomly();
    }
 
