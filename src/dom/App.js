@@ -1,6 +1,7 @@
 import { html, render } from 'lit-html';
 import ShipView from './shipView';
 import BoardView from './boardView';
+import pubsub from '../utils/pubSub';
 
 // game-page creates two boards: one for the player and one for the computer using BoardView component. and the ships of the player to place on his board using ShipView component and a start button to start the battle
 
@@ -10,7 +11,10 @@ export default class AppContainer extends HTMLElement {
       this.game = game;
    }
 
-   connectedCallback() {}
+   connectedCallback() {
+      this.renderStartPage();
+      this.addEventListeners();
+   }
 
    renderStartPage() {
       let humanBoard = this.boardContainer(this.game.humanBoard);
@@ -24,8 +28,31 @@ export default class AppContainer extends HTMLElement {
 
    renderBattlePage() {
       let humanBoard = this.boardContainer(this.game.humanBoard);
+
       let computerBoard = this.boardContainer(this.game.computerBoard);
       render(html`${humanBoard}${computerBoard}`, this);
+   }
+
+   addEventListeners() {
+      this.addEventListener('click', (e) => {
+         if (e.target.matches('.start-button')) {
+            let shipsCoords = [];
+            this.querySelectorAll('.ship-square[ship-part="0"]').forEach(
+               (square) => {
+                  let shipData = {
+                     shipId: square.parentElement.id,
+                     x: Number(square.getAttribute('x')),
+                     y: Number(square.getAttribute('y')),
+                  };
+
+                  shipsCoords.push(shipData);
+               }
+            );
+            console.log(shipsCoords);
+            pubsub.publish('game:start', shipsCoords);
+            this.renderBattlePage();
+         }
+      });
    }
 
    boardContainer(board) {

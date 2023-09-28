@@ -31,6 +31,7 @@ body {
    display: flex;
    align-items: center;
    justify-content: center;
+   position: relative;
 }
 
 .square:hover {
@@ -81,6 +82,7 @@ app-container {
    align-items: center;
    gap: 3rem;
 }
+
 .board-container {
    display: flex;
    flex-direction: column;

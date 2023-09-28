@@ -9,6 +9,7 @@ export default class Game {
       this.computerBoard = new Board(10, this.computer);
       this.humanBoard = new Board(10, this.human);
       this.computerBoard.placeShipsRandomly();
+      this.initializeListeners();
    }
 
    initializeListeners() {
@@ -16,8 +17,14 @@ export default class Game {
       pubsub.subscribe('human:attack', this.handleHumanAttack.bind(this));
    }
 
-   startGame(humanShipsCoordinates) {
-      this.humanBoard.placeShips(humanShipsCoordinates);
+   startGame(humanShipsData) {
+      humanShipsData.forEach((shipData) => {
+         const ship = this.humanBoard.ships.find(
+            (_ship) => _ship.id === shipData.shipId
+         );
+         this.humanBoard.placeShip(ship, shipData.x, shipData.y);
+         console.log(this.humanBoard.squares);
+      });
       this.currentPlayer = this.human;
    }
 

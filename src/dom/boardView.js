@@ -12,6 +12,7 @@ export default class BoardView extends HTMLElement {
    }
 
    render() {
+      this.innerHTML = '';
       this.classList.add('board');
       document.documentElement.style.setProperty(
          '--board-size',
@@ -45,7 +46,7 @@ export default class BoardView extends HTMLElement {
             if (!event.target.classList.contains('square')) return;
 
             const coords = event.target.getAttribute('data-coords');
-            console.log(coords);
+
             if (this.classList.contains('battle-started')) {
                pubsub.publish('square-attacked', coords);
             }
@@ -128,7 +129,6 @@ export default class BoardView extends HTMLElement {
       function dragLeave(e) {
          this.querySelectorAll(`.drag-over`).forEach((square) => {
             square.classList.remove('drag-over');
-            square.setAttribute('occupied-by', null);
          });
          this.querySelectorAll(
             `.square[occupied-by="${dropData.ship.id}"]`
@@ -160,7 +160,7 @@ export default class BoardView extends HTMLElement {
          }
 
          const shipBowSquare = dropData.squaresToTake[0];
-         shipBowSquare.style.position = 'relative';
+         shipBowSquare.classList.add('ship-bow');
 
          shipBowSquare.appendChild(draggable);
       }
