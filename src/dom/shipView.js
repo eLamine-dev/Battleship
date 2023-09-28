@@ -1,3 +1,5 @@
+import pubSub from '../utils/pubSub';
+
 export default class ShipView extends HTMLElement {
    constructor(ship) {
       super();
@@ -37,6 +39,7 @@ export default class ShipView extends HTMLElement {
                this.querySelector('.anchor').getAttribute('ship-part')
             ),
          };
+         pubSub.publish('ship-dragstart', ShipData);
          e.dataTransfer.setData('text/plain', JSON.stringify(ShipData));
          setTimeout(() => {
             e.target.classList.add('hide');

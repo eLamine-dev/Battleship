@@ -69,8 +69,12 @@ export default class BoardView extends HTMLElement {
          canPlaceShip: false,
       };
 
+      pubsub.subscribe('ship-dragstart', (data) => {
+         dropData.ship = data;
+      });
+
       function getDropData(e) {
-         dropData.ship = JSON.parse(e.dataTransfer.getData('text/plain'));
+         // dropData.ship = JSON.parse(e.dataTransfer.getData('text/plain'));
          dropData.squaresToTake.splice(0, dropData.squaresToTake.length);
 
          if (
@@ -124,6 +128,7 @@ export default class BoardView extends HTMLElement {
       function dragLeave(e) {
          this.querySelectorAll(`.drag-over`).forEach((square) => {
             square.classList.remove('drag-over');
+            square.setAttribute('occupied-by', null);
          });
          this.querySelectorAll(
             `.square[occupied-by="${dropData.ship.id}"]`
