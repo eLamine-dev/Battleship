@@ -7,6 +7,7 @@ export default class Player {
       if (this.type === 'computer') {
          this.computerAttack(board);
       } else {
+         console.log('hello');
          this.humanAttack(board, x, y);
       }
    }

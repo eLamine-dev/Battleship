@@ -25,7 +25,6 @@ export default class Board {
    }
 
    placeShip(ship, x, y) {
-      console.log(ship, x, y);
       if (!this.allSquaresAvailable(ship.length, x, y)) {
          throw new Error('Not enough space');
       }

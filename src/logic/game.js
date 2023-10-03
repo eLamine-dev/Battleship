@@ -23,15 +23,14 @@ export default class Game {
             (_ship) => _ship.id === shipData.shipId
          );
          this.humanBoard.placeShip(ship, shipData.x, shipData.y);
-         console.log(this.humanBoard.squares);
       });
       this.currentPlayer = this.human;
    }
 
-   handleHumanAttack(x, y) {
+   handleHumanAttack(coords) {
       if (this.currentPlayer !== this.human) return;
 
-      this.human.attack(this.computerBoard, x, y);
+      this.human.attack(this.computerBoard, coords.x, coords.y);
       if (this.computerBoard.allShipsSunk()) {
          pubsub.publish('human:won');
       } else this.changePlayer();

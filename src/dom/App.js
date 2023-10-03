@@ -48,7 +48,7 @@ export default class AppContainer extends HTMLElement {
                   shipsCoords.push(shipData);
                }
             );
-            console.log(shipsCoords);
+
             pubsub.publish('game:start', shipsCoords);
             this.renderBattlePage();
          }

@@ -45,11 +45,12 @@ export default class BoardView extends HTMLElement {
          this.addEventListener('click', (event) => {
             if (!event.target.classList.contains('square')) return;
 
-            const coords = event.target.getAttribute('data-coords');
+            const coords = {
+               x: event.target.getAttribute('x'),
+               y: event.target.getAttribute('x'),
+            };
 
-            if (this.classList.contains('battle-started')) {
-               pubsub.publish('square-attacked', coords);
-            }
+            pubsub.publish('human:attack', coords);
          });
       }
 
