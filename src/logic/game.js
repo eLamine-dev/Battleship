@@ -8,7 +8,6 @@ export default class Game {
       this.computer = new Player('computer');
       this.computerBoard = new Board(10, this.computer);
       this.humanBoard = new Board(10, this.human);
-      this.computerBoard.placeShipsRandomly();
       this.initializeListeners();
    }
 
@@ -18,6 +17,7 @@ export default class Game {
    }
 
    startGame(humanShipsData) {
+      this.computerBoard.placeShipsRandomly();
       humanShipsData.forEach((shipData) => {
          const ship = this.humanBoard.ships.find(
             (_ship) => _ship.id === shipData.shipId
@@ -32,6 +32,7 @@ export default class Game {
 
       this.human.attack(this.computerBoard, coords.x, coords.y);
       if (this.computerBoard.allShipsSunk()) {
+         alert('human won');
          pubsub.publish('human:won');
       } else this.changePlayer();
    }
@@ -43,6 +44,7 @@ export default class Game {
       if (this.currentPlayer === this.computer) {
          this.computerAttack();
       }
+      pubsub.publish('game:player-changed');
    }
 
    computerAttack() {

@@ -39,7 +39,15 @@ body {
 }
 
 .square:not([occupied-by='null']) {
+   background-color: blue;
+}
+
+.square[isShot='true'] {
    background-color: black;
+}
+
+.square:not([occupied-by='null'])[isShot='true'] {
+   background-color: red;
 }
 
 .ship {

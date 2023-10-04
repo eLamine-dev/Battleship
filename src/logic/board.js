@@ -6,7 +6,6 @@ export default class Board {
       this.size = size;
       this.squares = this.createBoard();
       this.createShips();
-      this.ready = false;
    }
 
    createBoard() {
@@ -47,24 +46,20 @@ export default class Board {
    receiveAttack(x, y) {
       const square = this.squares.get(`${x}-${y}`);
       square.isShot = true;
-      if (square.ship) {
+      if (square.ship !== null) {
          this.ships.find((ship) => ship.id === square.ship).hit();
       }
    }
 
    allShipsSunk() {
-      let result = true;
-      this.squares.forEach((square) => {
-         if (square.ship && !square.ship.isSunk()) {
-            result = false;
-         }
-      });
+      let result = this.ships.every((ship) => ship.sunk === true);
+      console.log(result);
       return result;
    }
 
    allSquaresAvailable(shipLength, x, y) {
       let result = true;
-      for (let i = 0; i < shipLength; i++) {
+      for (let i = 0; i < shipLength; i += 1) {
          const square = this.squares.get(`${x + i}-${y}`);
 
          if (!square || square.ship !== null) result = false;

@@ -9,6 +9,7 @@ export default class BoardView extends HTMLElement {
    connectedCallback() {
       this.render();
       this.addEventListeners();
+      pubsub.subscribe('game:player-changed', this.render.bind(this));
    }
 
    render() {
@@ -34,6 +35,7 @@ export default class BoardView extends HTMLElement {
             square.setAttribute('data-coords', `${coords[j].x}-${coords[j].y}`);
             square.innerText = `${coords[j].x}-${coords[j].y}`;
             square.setAttribute('occupied-by', coords[j].ship);
+            square.setAttribute('isShot', coords[j].isShot ? 'true' : 'false');
 
             column.prepend(square);
          }
@@ -47,9 +49,8 @@ export default class BoardView extends HTMLElement {
 
             const coords = {
                x: event.target.getAttribute('x'),
-               y: event.target.getAttribute('x'),
+               y: event.target.getAttribute('y'),
             };
-
             pubsub.publish('human:attack', coords);
          });
       }
@@ -101,11 +102,11 @@ export default class BoardView extends HTMLElement {
             }
          }
 
-         let availableSquare = (square) =>
+         const availableSquare = (square) =>
             square.getAttribute('occupied-by') === 'null' ||
             square.getAttribute('occupied-by') === dropData.ship.id;
 
-         let squaresAvailable = dropData.squaresToTake.every(availableSquare);
+         const squaresAvailable = dropData.squaresToTake.every(availableSquare);
 
          if (
             dropData.squaresToTake.length === dropData.ship.length &&

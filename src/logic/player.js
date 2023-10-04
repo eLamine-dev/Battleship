@@ -7,7 +7,6 @@ export default class Player {
       if (this.type === 'computer') {
          this.computerAttack(board);
       } else {
-         console.log('hello');
          this.humanAttack(board, x, y);
       }
    }
@@ -18,8 +17,8 @@ export default class Player {
 
    computerAttack(board) {
       const nonAttackedSquares = board.getNonAttackedSquares();
-      const keys = Array.from(board.squares.keys());
-      const randomKey = keys[Math.floor(Math.random() * keys.length)];
+      const keys = Array.from(nonAttackedSquares.keys());
+      const randomKey = keys[Math.floor(Math.random() * (keys.length - 1))];
       const randomSquare = nonAttackedSquares.get(randomKey);
       board.receiveAttack(randomSquare.x, randomSquare.y);
    }

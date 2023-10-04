@@ -3,8 +3,6 @@ import ShipView from './shipView';
 import BoardView from './boardView';
 import pubsub from '../utils/pubSub';
 
-// game-page creates two boards: one for the player and one for the computer using BoardView component. and the ships of the player to place on his board using ShipView component and a start button to start the battle
-
 export default class AppContainer extends HTMLElement {
    constructor(game) {
       super();
@@ -28,9 +26,9 @@ export default class AppContainer extends HTMLElement {
 
    renderBattlePage() {
       let humanBoard = this.boardContainer(this.game.humanBoard);
-
       let computerBoard = this.boardContainer(this.game.computerBoard);
       render(html`${humanBoard}${computerBoard}`, this);
+      console.log(this.game.computerBoard);
    }
 
    addEventListeners() {
@@ -56,7 +54,7 @@ export default class AppContainer extends HTMLElement {
    }
 
    boardContainer(board) {
-      return html` <div class="board-container ${board.player.type}">
+      return html` <div class="board-container">
          <div class="board-header">
             <div class="leader-avatar">img<img src="" alt="" srcset="" /></div>
             <div class="leader-message">
@@ -76,7 +74,10 @@ export default class AppContainer extends HTMLElement {
                img<img src="" alt="" srcset="" />
             </div>
          </div>
-         <board-view .board=${board} class="board-view board"></board-view>
+         <board-view
+            .board=${board}
+            class="${board.player.type}-board"
+         ></board-view>
       </div>`;
    }
 }
