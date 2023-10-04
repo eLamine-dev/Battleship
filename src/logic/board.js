@@ -52,8 +52,8 @@ export default class Board {
    }
 
    allShipsSunk() {
-      let result = this.ships.every((ship) => ship.sunk === true);
-      console.log(result);
+      let result = this.ships.every((ship) => ship.sank() === true);
+      console.log(this.ships, result);
       return result;
    }
 

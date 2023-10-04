@@ -5,17 +5,16 @@ export default class Ship {
       this.id = uuidv4();
       this.length = length;
       this.hits = 0;
-      this.sunk = false;
    }
 
    hit = () => {
       this.hits += 1;
    };
 
-   isSunk = () => {
+   sank = () => {
       if (this.hits === this.length) {
-         this.sunk = true;
+         return true;
       }
-      return this.sunk;
+      return false;
    };
 }
