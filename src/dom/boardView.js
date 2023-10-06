@@ -9,7 +9,7 @@ export default class BoardView extends HTMLElement {
    connectedCallback() {
       this.render();
       this.addEventListeners();
-      pubsub.subscribe('game:player-changed', this.render.bind(this));
+      pubsub.subscribe('game:attack-made', this.render.bind(this));
    }
 
    render() {

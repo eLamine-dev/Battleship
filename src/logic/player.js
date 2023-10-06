@@ -1,6 +1,7 @@
 export default class Player {
    constructor(type) {
       this.type = type;
+      this.computerHitAdjacentSquares = [];
    }
 
    attack(board, x, y) {
@@ -16,10 +17,28 @@ export default class Player {
    }
 
    computerAttack(board) {
+      let targetSquare;
       const nonAttackedSquares = board.getNonAttackedSquares();
-      const keys = Array.from(nonAttackedSquares.keys());
-      const randomKey = keys[Math.floor(Math.random() * (keys.length - 1))];
-      const randomSquare = nonAttackedSquares.get(randomKey);
-      board.receiveAttack(randomSquare.x, randomSquare.y);
+      if (this.computerHitAdjacentSquares.length > 0) {
+         targetSquare = nonAttackedSquares.get(
+            this.computerHitAdjacentSquares.pop()
+         );
+      } else {
+         const keys = Array.from(nonAttackedSquares.keys());
+         const randomKey = keys[Math.floor(Math.random() * (keys.length - 1))];
+         targetSquare = nonAttackedSquares.get(randomKey);
+      }
+
+      if (targetSquare.ship !== null) {
+         let leftSquare = `${targetSquare.x - 1}-${targetSquare.y}`;
+         let rightSquare = `${targetSquare.x + 1}-${targetSquare.y}`;
+
+         if (nonAttackedSquares.has(leftSquare))
+            this.computerHitAdjacentSquares.push(leftSquare);
+         if (nonAttackedSquares.has(rightSquare))
+            this.computerHitAdjacentSquares.push(rightSquare);
+      }
+      console.log(this.computerHitAdjacentSquares);
+      board.receiveAttack(targetSquare.x, targetSquare.y);
    }
 }
