@@ -30,15 +30,15 @@ export default class Player {
       }
 
       if (targetSquare.ship !== null) {
-         let leftSquare = `${targetSquare.x - 1}-${targetSquare.y}`;
-         let rightSquare = `${targetSquare.x + 1}-${targetSquare.y}`;
+         const leftSquare = `${targetSquare.x - 1}-${targetSquare.y}`;
+         const rightSquare = `${targetSquare.x + 1}-${targetSquare.y}`;
 
          if (nonAttackedSquares.has(leftSquare))
             this.computerHitAdjacentSquares.push(leftSquare);
          if (nonAttackedSquares.has(rightSquare))
             this.computerHitAdjacentSquares.push(rightSquare);
       }
-      console.log(this.computerHitAdjacentSquares);
+
       board.receiveAttack(targetSquare.x, targetSquare.y);
    }
 }

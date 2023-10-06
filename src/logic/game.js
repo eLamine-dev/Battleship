@@ -4,7 +4,7 @@ import Board from './board';
 
 export default class Game {
    constructor() {
-      this.human = new Player('human');
+      this.human = new Player('human', 'Rai-Ryuga', 'SISHIN DAIGAKUYA');
       this.computer = new Player('computer');
       this.computerBoard = new Board(10, this.computer);
       this.humanBoard = new Board(10, this.human);
@@ -32,10 +32,7 @@ export default class Game {
 
       this.human.attack(this.computerBoard, coords.x, coords.y);
       pubsub.publish('game:attack-made');
-      if (this.computerBoard.allShipsSunk() === true) {
-         alert('human:won');
-         pubsub.publish('human:won');
-      } else this.changePlayer();
+      this.checkForWin(this.computerBoard);
    }
 
    changePlayer() {
@@ -50,17 +47,14 @@ export default class Game {
    computerAttack() {
       this.computer.attack(this.humanBoard);
       pubsub.publish('game:attack-made');
-      if (this.humanBoard.allShipsSunk() === true) {
-         alert('computer:won');
-         pubsub.publish('computer:won');
-      } else this.changePlayer();
+      this.checkForWin(this.humanBoard);
    }
 
-   // isGameOver() {
-   //    if (this.humanBoard.allShipsSunk()) {
-   //       pubsub.publish('computer:won');
-   //    } else if (this.computerBoard.allShipsSunk()) {
-   //       pubsub.publish('human:won');
-   //    }
-   // }
+   checkForWin(board) {
+      if (board.allShipsSank() === true) {
+         pubsub.publish(`${this.currentPlayer.type}:won`);
+         return;
+      }
+      this.changePlayer();
+   }
 }

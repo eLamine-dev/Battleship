@@ -1,4 +1,4 @@
-import Ship from './ship';
+import Ship from '../ship';
 import { validate as uuidValidate } from 'uuid';
 
 test('ship creation', () => {

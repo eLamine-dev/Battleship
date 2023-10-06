@@ -11,10 +11,5 @@ export default class Ship {
       this.hits += 1;
    };
 
-   sank = () => {
-      if (this.hits === this.length) {
-         return true;
-      }
-      return false;
-   };
+   sank = () => this.hits === this.length;
 }

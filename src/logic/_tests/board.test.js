@@ -1,5 +1,5 @@
-import Board from './board';
-import Ship from './ship';
+import Board from '../board';
+import Ship from '../ship';
 
 let myBoard;
 let ship;
@@ -32,8 +32,9 @@ test('throw error when placing ship out of board', () => {
 });
 
 test('receive attack', () => {
-   myBoard.placeShip(ship, 0, 0);
+   myBoard.ships = [];
    myBoard.ships.push(ship);
+   myBoard.placeShip(myBoard.ships[0], 0, 0);
    myBoard.receiveAttack(0, 0);
    expect(myBoard.squares.get('0-0').isShot).toBe(true);
    expect(ship.hits).toBe(1);
@@ -42,6 +43,6 @@ test('receive attack', () => {
    expect(ship.sank()).toBe(false);
    myBoard.receiveAttack(2, 0);
    expect(ship.hits).toBe(3);
-
    expect(ship.sank()).toBe(true);
+   expect(myBoard.allShipsSank()).toBe(true);
 });

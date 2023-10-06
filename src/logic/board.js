@@ -51,7 +51,7 @@ export default class Board {
       }
    }
 
-   allShipsSunk() {
+   allShipsSank() {
       return this.ships.every((ship) => ship.sank() === true);
    }
 

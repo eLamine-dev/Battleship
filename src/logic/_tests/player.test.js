@@ -1,5 +1,5 @@
-import Player from './player';
-import Board from './board';
+import Player from '../player';
+import Board from '../board';
 
 test('random play by computer', () => {
    let myBoard = new Board(10);
