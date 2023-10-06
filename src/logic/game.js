@@ -33,6 +33,7 @@ export default class Game {
       this.human.attack(this.computerBoard, coords.x, coords.y);
       pubsub.publish('game:attack-made');
       if (this.computerBoard.allShipsSunk() === true) {
+         alert('human:won');
          pubsub.publish('human:won');
       } else this.changePlayer();
    }
@@ -50,6 +51,7 @@ export default class Game {
       this.computer.attack(this.humanBoard);
       pubsub.publish('game:attack-made');
       if (this.humanBoard.allShipsSunk() === true) {
+         alert('computer:won');
          pubsub.publish('computer:won');
       } else this.changePlayer();
    }

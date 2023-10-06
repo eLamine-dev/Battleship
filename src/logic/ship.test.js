@@ -6,7 +6,7 @@ test('ship creation', () => {
    expect(uuidValidate(testShip.id)).toBe(true);
    expect(testShip.length).toBe(3);
    expect(testShip.hits).toBe(0);
-   expect(testShip.sunk).toBe(false);
+   expect(testShip.sank()).toBe(false);
 });
 
 test('ship hit', () => {
@@ -16,5 +16,5 @@ test('ship hit', () => {
    testShip.hit();
    testShip.hit();
    expect(testShip.hits).toBe(3);
-   expect(testShip.isSunk()).toBe(true);
+   expect(testShip.sank()).toBe(true);
 });

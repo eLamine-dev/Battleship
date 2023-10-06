@@ -39,8 +39,9 @@ test('receive attack', () => {
    expect(ship.hits).toBe(1);
    myBoard.receiveAttack(1, 0);
    expect(ship.hits).toBe(2);
-   expect(ship.isSunk()).toBe(false);
+   expect(ship.sank()).toBe(false);
    myBoard.receiveAttack(2, 0);
    expect(ship.hits).toBe(3);
-   expect(ship.isSunk()).toBe(true);
+
+   expect(ship.sank()).toBe(true);
 });
