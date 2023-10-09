@@ -1,6 +1,8 @@
 export default class Player {
-   constructor(type) {
+   constructor(type, captain, strategist) {
       this.type = type;
+      this.captainName = captain;
+      this.strategistName = strategist;
       this.computerHitAdjacentSquares = [];
    }
 

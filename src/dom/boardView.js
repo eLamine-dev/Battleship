@@ -43,7 +43,7 @@ export default class BoardView extends HTMLElement {
    }
 
    addEventListeners() {
-      if (this.board.player.type === 'computer') {
+      if (this.classList.contains('computer-board')) {
          this.addEventListener('click', (event) => {
             if (!event.target.classList.contains('square')) return;
 
@@ -56,7 +56,7 @@ export default class BoardView extends HTMLElement {
       }
 
       const squares = this.querySelectorAll('.square');
-      if (this.board.player.type === 'human') {
+      if (this.classList.contains('human-board')) {
          squares.forEach((square) => {
             square.addEventListener('dragenter', getDropData.bind(this));
             square.addEventListener('dragenter', dragOver.bind(this));

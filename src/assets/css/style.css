@@ -38,6 +38,7 @@ body {
    background-color: rgb(72, 0, 255);
 }
 
+/* .human-board  */
 .square:not([occupied-by='null']) {
    background-color: blue;
 }

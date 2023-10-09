@@ -12,10 +12,14 @@ export default class AppContainer extends HTMLElement {
    connectedCallback() {
       this.renderStartPage();
       this.addEventListeners();
+      pubsub.subscribe('game:winner', this.renderWinnerDialog.bind(this));
    }
 
    renderStartPage() {
-      let humanBoard = this.boardContainer(this.game.humanBoard);
+      let humanBoard = this.boardContainer(
+         this.game.humanBoard,
+         this.game.human
+      );
       let shipsContainer = html` <div class="ships-container">
          <h3>Rai Ryuga fleet</h3>
          ${[...this.game.humanBoard.ships].map((ship) => new ShipView(ship))}
@@ -25,16 +29,49 @@ export default class AppContainer extends HTMLElement {
    }
 
    renderBattlePage() {
-      let humanBoard = this.boardContainer(this.game.humanBoard);
-      let computerBoard = this.boardContainer(this.game.computerBoard);
+      let humanBoard = this.boardContainer(
+         this.game.humanBoard,
+         this.game.human
+      );
+      let computerBoard = this.boardContainer(
+         this.game.computerBoard,
+         this.game.computer
+      );
       render(html`${humanBoard}${computerBoard}`, this);
-      console.log(this.game.computerBoard);
+   }
+
+   renderWinnerDialog(winner) {
+      const winnerDialog = document.createElement('dialog');
+      winnerDialog.classList.add('winner-dialog');
+
+      const winnerDialogHtml = html`
+         <p>${winner.captainName} won!</p>
+         <button class="restart-button">Restart</button>
+      `;
+      render(winnerDialogHtml, winnerDialog);
+      document.body.appendChild(winnerDialog);
+      winnerDialog.showModal();
+      winnerDialog.addEventListener('click', (e) => {
+         if (e.target.matches('.restart-button')) {
+            winnerDialog.close();
+            this.resetGame();
+         }
+         e.stopPropagation(); // prevent event bubbling to parent elements
+         e.preventDefault(); // prevent default browser behaviour (e.g. page reload)
+         return false; // prevent event bubbling to parent elements and default browser behaviour (e.g. page reload)
+      });
+   }
+
+   resetGame() {
+      console.log('hello');
+      this.game.setUpNewGame();
+      this.renderStartPage();
    }
 
    addEventListeners() {
       this.addEventListener('click', (e) => {
          if (e.target.matches('.start-button')) {
-            let shipsCoords = [];
+            const shipsCoords = [];
             this.querySelectorAll('.ship-square[ship-part="0"]').forEach(
                (square) => {
                   let shipData = {
@@ -53,20 +90,20 @@ export default class AppContainer extends HTMLElement {
       });
    }
 
-   boardContainer(board) {
+   boardContainer(board, player) {
       return html` <div class="board-container">
          <div class="board-header">
             <div class="leader-avatar">img<img src="" alt="" srcset="" /></div>
             <div class="leader-message">
                <p>
-                  <span class="name">Rai Ryouja</span>
+                  <span class="name">${player.captainName}</span>
                   <span class="message">We need a good plan</span>
                </p>
             </div>
 
             <div class="strategist-message">
                <p>
-                  <span class="name">dhsgfg</span>
+                  <span class="name">${player.strategistName}</span>
                   <span class="message">dfsgdfg dfgdfs dfgdfg </span>
                </p>
             </div>
@@ -74,10 +111,7 @@ export default class AppContainer extends HTMLElement {
                img<img src="" alt="" srcset="" />
             </div>
          </div>
-         <board-view
-            .board=${board}
-            class="${board.player.type}-board"
-         ></board-view>
+         <board-view .board=${board} class="${player.type}-board"></board-view>
       </div>`;
    }
 }

@@ -1,8 +1,7 @@
 import Ship from './ship';
 
 export default class Board {
-   constructor(size, player) {
-      this.player = player;
+   constructor(size) {
       this.size = size;
       this.squares = this.createBoard();
       this.createShips();
