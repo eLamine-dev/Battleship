@@ -45,7 +45,11 @@ export default class BoardView extends HTMLElement {
    addEventListeners() {
       if (this.classList.contains('computer-board')) {
          this.addEventListener('click', (event) => {
-            if (!event.target.classList.contains('square')) return;
+            if (
+               !event.target.classList.contains('square') ||
+               event.target.getAttribute('isShot') === 'true'
+            )
+               return;
 
             const coords = {
                x: event.target.getAttribute('x'),

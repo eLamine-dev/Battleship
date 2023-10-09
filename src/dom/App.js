@@ -56,14 +56,13 @@ export default class AppContainer extends HTMLElement {
             winnerDialog.close();
             this.resetGame();
          }
-         e.stopPropagation(); // prevent event bubbling to parent elements
-         e.preventDefault(); // prevent default browser behaviour (e.g. page reload)
-         return false; // prevent event bubbling to parent elements and default browser behaviour (e.g. page reload)
+         e.stopPropagation();
+         e.preventDefault();
+         return false;
       });
    }
 
    resetGame() {
-      console.log('hello');
       this.game.setUpNewGame();
       this.renderStartPage();
    }
