@@ -19,12 +19,22 @@ body {
    background-size: cover;
 }
 
+app-container {
+   padding: 4rem;
+   flex-basis: 100%;
+   border-bottom: 3px solid white;
+   border-top: 3px solid white;
+   display: grid;
+   grid-template-columns: 500px 500px;
+   grid-template-rows: auto auto;
+   justify-content: center;
+   gap: 4rem;
+}
+
 .board {
    display: grid;
    grid-template-columns: repeat(var(--board-size), var(--square-size));
    column-gap: 1px;
-   /* transform-origin: bottom center;
-   transform: perspective(600px) rotatex(45deg); */
 }
 
 .board-column {
@@ -82,9 +92,20 @@ body {
 
 .ships-container {
    display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   width: 400px;
+}
+
+.ships {
+   display: flex;
    align-items: flex-start;
    flex-direction: column;
    gap: 3px;
+}
+
+.start-button {
+   grid-column: 1/-1;
 }
 
 .hide {
@@ -95,15 +116,9 @@ body {
    background-color: rgba(0, 255, 255, 0.516);
 }
 
-app-container {
-   display: grid;
-   grid-template-columns: auto auto;
-   align-items: center;
-   gap: 3rem;
-}
-
 .board-container {
    display: flex;
+   gap: 1rem;
 }
 
 .board-container.computer {
@@ -114,4 +129,33 @@ app-container {
 .board-avatars {
    display: flex;
    flex-direction: column;
+   justify-content: stretch;
+   gap: 1rem;
+}
+
+.board-container.computer .leader-img {
+   background-image: url('../images/rakou.jpg');
+}
+
+.board-container.computer .strategist-img {
+   background-image: url('../images/YUUSHUN.jpg');
+}
+
+.board-container.human .leader-img {
+   background-image: url('../images/rai.jpg');
+}
+
+.board-container.human .strategist-img {
+   background-image: url('../images/SISHIN-DAIGAKUYA.jpg');
+}
+
+.leader-img,
+.strategist-img {
+   border-radius: 1rem;
+   width: 120px;
+   flex-grow: 1;
+   background-repeat: no-repeat;
+   background-attachment: local;
+   background-position: center;
+   background-size: 100% 100%;
 }

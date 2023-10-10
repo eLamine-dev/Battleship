@@ -2,6 +2,7 @@ import { html, render } from 'lit-html';
 import ShipView from './shipView';
 import BoardView from './boardView';
 import pubsub from '../utils/pubSub';
+import startImage from '../assets/images/start-image.jpg';
 
 export default class AppContainer extends HTMLElement {
    constructor(game) {
@@ -22,12 +23,19 @@ export default class AppContainer extends HTMLElement {
       // );
       let humanBoard = new BoardView(this.game.humanBoard);
       humanBoard.classList.add('human-board');
-      const shipsContainer = html` <div class="ships-container">
-         <h3>Rai Ryuga fleet</h3>
-         ${[...this.game.humanBoard.ships].map((ship) => new ShipView(ship))}
-      </div>`;
-      let startButton = html`<button class="start-button">Start</button>`;
-      render(html`${humanBoard}${shipsContainer}${startButton}`, this);
+      const shipsContainer = html`
+         <div class="ships-container">
+            <div class="ships">
+               ${[...this.game.humanBoard.ships].map(
+                  (ship) => new ShipView(ship)
+               )}
+            </div>
+            <button class="start-button">Start</button>
+         </div>
+      `;
+
+      // let startButton = html``;
+      render(html`${humanBoard}${shipsContainer}`, this);
    }
 
    renderBattlePage() {
@@ -93,9 +101,9 @@ export default class AppContainer extends HTMLElement {
 
    boardContainer(board, player) {
       return html` <div class="board-container ${player.type}">
-         <div class="board-header">
-            <div class="leader-img">img<img src="" alt="" srcset="" /></div>
-            <div class="strategist-img">img<img src="" alt="" srcset="" /></div>
+         <div class="board-avatars">
+            <div class="leader-img"></div>
+            <div class="strategist-img"></div>
          </div>
          <board-view .board=${board} class="${player.type}-board"></board-view>
       </div>`;

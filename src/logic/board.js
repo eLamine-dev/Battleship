@@ -18,7 +18,7 @@ export default class Board {
    }
 
    createShips() {
-      const shipLengths = [5, 4, 3, 3, 2, 2];
+      const shipLengths = [5, 4, 4, 3, 3, 2];
       this.ships = shipLengths.map((shipLength) => new Ship(shipLength));
    }
 
