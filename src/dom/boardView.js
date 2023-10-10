@@ -33,7 +33,7 @@ export default class BoardView extends HTMLElement {
             square.setAttribute('y', coords[j].y);
             square.id = `sq-${coords[j].x}-${coords[j].y}`;
             square.setAttribute('data-coords', `${coords[j].x}-${coords[j].y}`);
-            square.innerText = `${coords[j].x}-${coords[j].y}`;
+            // square.innerText = `${coords[j].x}-${coords[j].y}`;
             square.setAttribute('occupied-by', coords[j].ship);
             square.setAttribute('isShot', coords[j].isShot ? 'true' : 'false');
 

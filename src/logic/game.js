@@ -33,7 +33,6 @@ export default class Game {
 
    handleHumanAttack(coords) {
       if (this.currentPlayer !== this.human) return;
-
       this.human.attack(this.computerBoard, coords.x, coords.y);
       pubsub.publish('game:attack-made');
       this.checkForWin(this.computerBoard);
@@ -44,7 +43,7 @@ export default class Game {
          this.currentPlayer === this.human ? this.computer : this.human;
 
       if (this.currentPlayer === this.computer) {
-         this.computerAttack();
+         setTimeout(() => this.computerAttack(), 300);
       }
    }
 

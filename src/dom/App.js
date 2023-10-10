@@ -16,11 +16,13 @@ export default class AppContainer extends HTMLElement {
    }
 
    renderStartPage() {
-      let humanBoard = this.boardContainer(
-         this.game.humanBoard,
-         this.game.human
-      );
-      let shipsContainer = html` <div class="ships-container">
+      // let humanBoard = this.boardContainer(
+      //    this.game.humanBoard,
+      //    this.game.human
+      // );
+      let humanBoard = new BoardView(this.game.humanBoard);
+      humanBoard.classList.add('human-board');
+      const shipsContainer = html` <div class="ships-container">
          <h3>Rai Ryuga fleet</h3>
          ${[...this.game.humanBoard.ships].map((ship) => new ShipView(ship))}
       </div>`;
@@ -90,25 +92,10 @@ export default class AppContainer extends HTMLElement {
    }
 
    boardContainer(board, player) {
-      return html` <div class="board-container">
+      return html` <div class="board-container ${player.type}">
          <div class="board-header">
-            <div class="leader-avatar">img<img src="" alt="" srcset="" /></div>
-            <div class="leader-message">
-               <p>
-                  <span class="name">${player.captainName}</span>
-                  <span class="message">We need a good plan</span>
-               </p>
-            </div>
-
-            <div class="strategist-message">
-               <p>
-                  <span class="name">${player.strategistName}</span>
-                  <span class="message">dfsgdfg dfgdfs dfgdfg </span>
-               </p>
-            </div>
-            <div class="strategist-avatar">
-               img<img src="" alt="" srcset="" />
-            </div>
+            <div class="leader-img">img<img src="" alt="" srcset="" /></div>
+            <div class="strategist-img">img<img src="" alt="" srcset="" /></div>
          </div>
          <board-view .board=${board} class="${player.type}-board"></board-view>
       </div>`;
