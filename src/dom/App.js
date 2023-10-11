@@ -25,12 +25,18 @@ export default class AppContainer extends HTMLElement {
       humanBoard.classList.add('human-board');
       const shipsContainer = html`
          <div class="ships-container">
+            <div class="start-page-avatars">
+               <div class="leader-img"></div>
+               <p><b>Rai Ryuga: </b>Sishin, is the battle plan ready?</p>
+               <div class="strategist-img"></div>
+               <p><b>Sishin: </b>Yes Rai, this is the ships positioning:</p>
+            </div>
             <div class="ships">
                ${[...this.game.humanBoard.ships].map(
                   (ship) => new ShipView(ship)
                )}
             </div>
-            <button class="start-button">Start</button>
+            <button class="start-button">Start Battle</button>
          </div>
       `;
 
@@ -79,8 +85,11 @@ export default class AppContainer extends HTMLElement {
 
    addEventListeners() {
       this.addEventListener('click', (e) => {
+         const unplacedShips = this.querySelectorAll('.ships-container .ship');
+         if (unplacedShips.length > 0) return;
          if (e.target.matches('.start-button')) {
             const shipsCoords = [];
+
             this.querySelectorAll('.ship-square[ship-part="0"]').forEach(
                (square) => {
                   let shipData = {

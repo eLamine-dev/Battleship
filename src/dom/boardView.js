@@ -124,6 +124,11 @@ export default class BoardView extends HTMLElement {
 
       function dragOver(e) {
          e.preventDefault();
+         this.querySelectorAll(
+            `.square[occupied-by="${dropData.ship.id}"]`
+         ).forEach((square) => {
+            square.setAttribute('occupied-by', null);
+         });
 
          if (!dropData.canPlaceShip) return;
 

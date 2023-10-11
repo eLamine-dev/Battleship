@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;1,100;1,300;1,400;1,700;1,900&family=Outfit:wght@100;200;300;400;500;600;700;800;900&family=Righteous&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Macondo&display=swap');
+
 :root {
    --board-size: 0;
    --square-size: 35px;
@@ -7,28 +11,38 @@
    box-sizing: border-box;
 }
 
+.game-title {
+   font-size: 3rem;
+   font-family: 'Macondo', cursive;
+}
+
 body {
    height: 100vh;
    width: 100vw;
    display: flex;
+   flex-direction: column;
    align-items: center;
    justify-content: center;
    background-image: url('../images/ship-background.png');
    background-repeat: no-repeat;
    background-attachment: fixed;
    background-size: cover;
+   color: white;
+   gap: 1rem;
 }
 
 app-container {
    padding: 4rem;
-   flex-basis: 100%;
-   border-bottom: 3px solid white;
-   border-top: 3px solid white;
+   background-color: rgba(240, 255, 255, 0.192);
+
+   /* border-bottom: 3px solid white;
+   border-top: 3px solid white; */
+   border-radius: 1rem;
    display: grid;
-   grid-template-columns: 500px 500px;
-   grid-template-rows: auto auto;
+   grid-template-columns: auto 500px;
    justify-content: center;
    gap: 4rem;
+   font-family: 'Lato', sans-serif;
 }
 
 .board {
@@ -62,6 +76,10 @@ app-container {
    background-color: blue;
 }
 
+.computer-board .square {
+   cursor: crosshair;
+}
+
 .square[isShot='true'] {
    background-color: black;
 }
@@ -75,6 +93,7 @@ app-container {
    gap: 1px;
    justify-content: center;
    z-index: 10;
+   cursor: move;
 }
 
 .ship.placed {
@@ -95,17 +114,37 @@ app-container {
    flex-direction: column;
    justify-content: space-between;
    width: 400px;
+   position: relative;
 }
 
 .ships {
    display: flex;
-   align-items: flex-start;
+   align-items: start;
+   justify-content: start;
    flex-direction: column;
    gap: 3px;
 }
 
 .start-button {
-   grid-column: 1/-1;
+   display: inline-block;
+   outline: none;
+   cursor: pointer;
+   font-weight: 600;
+   border-radius: 3px;
+   padding: 12px 24px;
+   border: 0;
+   color: #3a4149;
+   background: #e7ebee;
+   line-height: 1.15;
+   font-size: 16px;
+   position: absolute;
+   right: 0;
+   bottom: 0;
+}
+
+.start-button:hover {
+   transition: all 0.1s ease;
+   box-shadow: 0 0 0 0 #fff, 0 0 0 3px #1de9b6;
 }
 
 .hide {
@@ -140,17 +179,18 @@ app-container {
 .board-container.computer .strategist-img {
    background-image: url('../images/YUUSHUN.jpg');
 }
-
+.ships-container .leader-img,
 .board-container.human .leader-img {
    background-image: url('../images/rai.jpg');
 }
 
+.ships-container .strategist-img,
 .board-container.human .strategist-img {
    background-image: url('../images/SISHIN-DAIGAKUYA.jpg');
 }
 
-.leader-img,
-.strategist-img {
+.board-container .leader-img,
+.board-container .strategist-img {
    border-radius: 1rem;
    width: 120px;
    flex-grow: 1;
@@ -158,4 +198,22 @@ app-container {
    background-attachment: local;
    background-position: center;
    background-size: 100% 100%;
+}
+.ships-container .leader-img,
+.ships-container .strategist-img {
+   width: 40px;
+   height: 60px;
+   border-radius: 4px;
+   background-repeat: no-repeat;
+   background-attachment: local;
+   background-position: center;
+   background-size: 100% 100%;
+}
+
+.start-page-avatars {
+   display: grid;
+   grid-template-columns: auto 1fr;
+   grid-template-rows: auto auto;
+   gap: 5px;
+   align-items: center;
 }
