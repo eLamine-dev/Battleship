@@ -76,16 +76,32 @@ app-container {
    background-color: blue;
 }
 
-.computer-board .square {
+.computer-board .square[isShot='false'] {
    cursor: crosshair;
-}
-
-.square[isShot='true'] {
-   background-color: black;
 }
 
 .square:not([occupied-by='null'])[isShot='true'] {
    background-color: red;
+}
+
+.square::before {
+   display: inline-block;
+   font-style: normal;
+   font-variant: normal;
+   text-rendering: auto;
+   -webkit-font-smoothing: antialiased;
+   font-family: 'Font Awesome 5 Free';
+   font-weight: 900;
+}
+
+.square:not([occupied-by='null'])[isShot='true']::before {
+   content: '\f00d';
+   font-size: 1.4rem;
+}
+
+.square[isShot='true']::before {
+   content: '\f111';
+   font-size: 0.7rem;
 }
 
 .ship {
@@ -112,15 +128,16 @@ app-container {
 .ships-container {
    display: flex;
    flex-direction: column;
-   justify-content: space-between;
+   justify-content: start;
    width: 400px;
    position: relative;
+   gap: 1rem;
 }
 
 .ships {
    display: flex;
    align-items: start;
-   justify-content: start;
+   justify-content: center;
    flex-direction: column;
    gap: 3px;
 }
