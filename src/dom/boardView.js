@@ -78,6 +78,12 @@ export default class BoardView extends HTMLElement {
 
       pubsub.subscribe('ship-dragstart', (data) => {
          dropData.ship = data;
+
+         this.querySelectorAll(
+            `.square[occupied-by="${dropData.ship.id}"]`
+         ).forEach((square) => {
+            square.setAttribute('occupied-by', null);
+         });
       });
 
       function getDropData(e) {
@@ -124,11 +130,6 @@ export default class BoardView extends HTMLElement {
 
       function dragOver(e) {
          e.preventDefault();
-         this.querySelectorAll(
-            `.square[occupied-by="${dropData.ship.id}"]`
-         ).forEach((square) => {
-            square.setAttribute('occupied-by', null);
-         });
 
          if (!dropData.canPlaceShip) return;
 

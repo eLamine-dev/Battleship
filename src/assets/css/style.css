@@ -5,9 +5,11 @@
 :root {
    --board-size: 0;
    --square-size: 35px;
-   --ship: #991b1b;
-   --transparent: #0f172a66;
-   --white: #eff6ff;
+   --ship: #2563eb;
+   --hitShip: #dc2626;
+   --borderColor: #bfdbfe;
+   --transparent: #1e40af58;
+   --white: #e2e8f0;
 }
 
 * {
@@ -15,11 +17,12 @@
 }
 
 .game-title {
-   font-size: 2rem;
+   font-size: 2.5rem;
    font-family: 'Macondo', cursive;
    background-color: var(--transparent);
    border-radius: 1rem;
    padding: 1rem;
+   box-shadow: 0 0 10px var(--borderColor);
 }
 
 body {
@@ -28,7 +31,6 @@ body {
    display: flex;
    flex-direction: column;
    align-items: center;
-   align-content: center;
    justify-content: center;
    background-image: url('../images/ship-background.png');
    background-repeat: no-repeat;
@@ -37,6 +39,7 @@ body {
    color: var(--white);
    gap: 1rem;
    padding: 1rem;
+   font-family: 'Macondo', cursive;
 }
 
 app-container {
@@ -48,7 +51,8 @@ app-container {
    justify-content: center;
    align-items: center;
    gap: 4rem;
-   font-family: 'Lato', sans-serif;
+
+   box-shadow: 0 0 10px var(--borderColor);
 }
 
 .board {
@@ -71,7 +75,7 @@ app-container {
    align-items: center;
    justify-content: center;
    position: relative;
-   border: 2px var(--white) solid;
+   border: 2px var(--borderColor) solid;
 }
 
 .square:hover {
@@ -87,7 +91,7 @@ app-container {
 }
 
 .square:not([occupied-by='null'])[isShot='true'] {
-   background-color: var(--ship);
+   background-color: var(--hitShip);
 }
 
 .square::before {
@@ -128,7 +132,7 @@ app-container {
    height: var(--square-size);
    width: var(--square-size);
    background-color: var(--ship);
-   border: 2px rgb(241, 74, 74) solid;
+   border: 2px #c1c3ff solid;
 }
 
 .ships-container {
@@ -139,9 +143,10 @@ app-container {
    height: 400px;
    position: relative;
    gap: 1rem;
-   background-color: var(--transparent);
+   /* background-color: var(--transparent); */
    padding: 1rem;
    border-radius: 1rem;
+   box-shadow: 0 0 10px var(--borderColor);
 }
 
 .ships {
@@ -152,26 +157,32 @@ app-container {
    gap: 3px;
 }
 
-.start-button {
-   display: inline-block;
+.start-button,
+.restart-button {
    outline: none;
    cursor: pointer;
    font-weight: 600;
    border-radius: 3px;
    padding: 12px 24px;
    border: 0;
-   color: var(--ship);
-   background: var(--white);
+   color: var(--borderColor);
+   box-shadow: 0 0 10px var(--borderColor);
+   background: rgba(255, 255, 255, 0);
    line-height: 1.15;
    font-size: 16px;
-   position: absolute;
    right: 1rem;
    bottom: 1rem;
 }
 
-.start-button:hover {
+.start-button {
+   position: absolute;
+}
+
+.start-button:hover,
+.restart-button:hover {
+   color: var(--transparent);
    transition: all 0.1s ease;
-   /* box-shadow: 0 0 0 0 #fff, 0 0 0 3px var(--ship); */
+   background-color: var(--borderColor);
 }
 
 .hide {
@@ -225,6 +236,11 @@ app-container {
    background-attachment: local;
    background-position: center;
    background-size: 100% 100%;
+   box-shadow: 0 0 10px var(--borderColor);
+   color: var(--white);
+   display: flex;
+   justify-content: center;
+   align-items: end;
 }
 .ships-container .leader-img,
 .ships-container .strategist-img {
@@ -247,4 +263,32 @@ app-container {
 
 b {
    font-weight: 700;
+}
+
+.end-msg {
+   font-size: 1.4rem;
+   font-family: 'Macondo', cursive;
+}
+
+.end-img {
+   width: 400px;
+   border-radius: 1rem;
+}
+
+.end-dialog {
+   padding: 1.4rem;
+
+   border-radius: 1rem;
+   background-color: #1e293b;
+   color: var(--white);
+   border: none;
+   box-shadow: 0 0 10px var(--borderColor);
+}
+
+.end-modal-content {
+   display: flex;
+   flex-direction: column;
+   align-content: center;
+   align-items: center;
+   gap: 1rem;
 }

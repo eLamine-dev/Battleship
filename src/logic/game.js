@@ -4,8 +4,8 @@ import Board from './board';
 
 export default class Game {
    constructor() {
-      this.human = new Player('human', 'RAI RYUGA', 'SISHIN DAIGAKUYA');
-      this.computer = new Player('computer', 'RACKO', 'YUUSHUN');
+      this.human = new Player('human', 'RAI', 'SISHIN');
+      this.computer = new Player('computer', 'RAKOU', 'YUUSHUN');
       this.setUpNewGame();
       this.initializeListeners();
    }
@@ -43,7 +43,7 @@ export default class Game {
          this.currentPlayer === this.human ? this.computer : this.human;
 
       if (this.currentPlayer === this.computer) {
-         setTimeout(() => this.computerAttack(), 300);
+         setTimeout(() => this.computerAttack(), 150);
       }
    }
 

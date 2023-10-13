@@ -2,7 +2,8 @@ import { html, render } from 'lit-html';
 import ShipView from './shipView';
 import BoardView from './boardView';
 import pubsub from '../utils/pubSub';
-import startImage from '../assets/images/start-image.jpg';
+import endImgLost from '../assets/images/end-lost.jpg';
+import endImgWin from '../assets/images/end-win.jpg';
 
 export default class AppContainer extends HTMLElement {
    constructor(game) {
@@ -58,11 +59,24 @@ export default class AppContainer extends HTMLElement {
 
    renderWinnerDialog(winner) {
       const winnerDialog = document.createElement('dialog');
-      winnerDialog.classList.add('winner-dialog');
+      winnerDialog.classList.add('end-dialog');
+      let endImg;
+      let endMessage;
+
+      if (winner.type === 'human') {
+         endImg = endImgWin;
+         endMessage = 'We won, Rai is now the galaxy Emperor';
+      } else {
+         endImg = endImgLost;
+         endMessage = 'We lost this battle, but we will meet again Rakou';
+      }
 
       const winnerDialogHtml = html`
-         <p>${winner.captainName} won!</p>
-         <button class="restart-button">Restart</button>
+         <div class="end-modal-content">
+            <p class="end-msg">${endMessage}</p>
+            <img class="end-img" src="${endImg}" alt="" srcset="" />
+            <button class="restart-button">Play again</button>
+         </div>
       `;
       render(winnerDialogHtml, winnerDialog);
       document.body.appendChild(winnerDialog);
@@ -111,8 +125,8 @@ export default class AppContainer extends HTMLElement {
    boardContainer(board, player) {
       return html` <div class="board-container ${player.type}">
          <div class="board-avatars">
-            <div class="leader-img"></div>
-            <div class="strategist-img"></div>
+            <div class="leader-img">${player.captainName}</div>
+            <div class="strategist-img">${player.strategistName}</div>
          </div>
          <board-view .board=${board} class="${player.type}-board"></board-view>
       </div>`;
