@@ -18,10 +18,6 @@ export default class AppContainer extends HTMLElement {
    }
 
    renderStartPage() {
-      // let humanBoard = this.boardContainer(
-      //    this.game.humanBoard,
-      //    this.game.human
-      // );
       let humanBoard = new BoardView(this.game.humanBoard);
       humanBoard.classList.add('human-board');
       const shipsContainer = html`
