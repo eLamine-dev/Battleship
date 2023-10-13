@@ -75,7 +75,7 @@ app-container {
    align-items: center;
    justify-content: center;
    position: relative;
-   border: 2px var(--borderColor) solid;
+   border: 1px var(--borderColor) solid;
 }
 
 .square:hover {
@@ -125,14 +125,14 @@ app-container {
 .ship.placed {
    position: absolute;
    z-index: 10;
-   left: -2px;
+   left: -1px;
 }
 
 .ship-square {
    height: var(--square-size);
    width: var(--square-size);
    background-color: var(--ship);
-   border: 2px #c1c3ff solid;
+   border: 1px #c1c3ff solid;
 }
 
 .ships-container {
@@ -143,7 +143,6 @@ app-container {
    height: 400px;
    position: relative;
    gap: 1rem;
-   /* background-color: var(--transparent); */
    padding: 1rem;
    border-radius: 1rem;
    box-shadow: 0 0 10px var(--borderColor);
@@ -190,7 +189,7 @@ app-container {
 }
 
 .drag-over {
-   background-color: var(--ship);
+   background-color: #2564eb85;
 }
 
 .board-container {
