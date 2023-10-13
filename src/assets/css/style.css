@@ -32,7 +32,7 @@ body {
    flex-direction: column;
    align-items: center;
    justify-content: center;
-   background-image: url('../images/ship-background.png');
+   background-image: url('../images/ship-background.jpg');
    background-repeat: no-repeat;
    background-attachment: fixed;
    background-size: cover;
