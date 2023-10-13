@@ -5,6 +5,9 @@
 :root {
    --board-size: 0;
    --square-size: 35px;
+   --ship: #991b1b;
+   --transparent: #0f172a66;
+   --white: #eff6ff;
 }
 
 * {
@@ -12,8 +15,11 @@
 }
 
 .game-title {
-   font-size: 3rem;
+   font-size: 2rem;
    font-family: 'Macondo', cursive;
+   background-color: var(--transparent);
+   border-radius: 1rem;
+   padding: 1rem;
 }
 
 body {
@@ -22,30 +28,31 @@ body {
    display: flex;
    flex-direction: column;
    align-items: center;
+   align-content: center;
    justify-content: center;
    background-image: url('../images/ship-background.png');
    background-repeat: no-repeat;
    background-attachment: fixed;
    background-size: cover;
-   color: white;
+   color: var(--white);
    gap: 1rem;
+   padding: 1rem;
 }
 
 app-container {
-   padding: 4rem;
-   background-color: rgba(240, 255, 255, 0.192);
-
-   /* border-bottom: 3px solid white;
-   border-top: 3px solid white; */
+   padding: 2rem 4rem;
+   background-color: var(--transparent);
    border-radius: 1rem;
-   display: grid;
-   grid-template-columns: auto 500px;
+   display: flex;
+   flex-wrap: wrap;
    justify-content: center;
+   align-items: center;
    gap: 4rem;
    font-family: 'Lato', sans-serif;
 }
 
 .board {
+   border-radius: 1rem;
    display: grid;
    grid-template-columns: repeat(var(--board-size), var(--square-size));
    column-gap: 1px;
@@ -60,20 +67,19 @@ app-container {
 }
 
 .square {
-   background-color: rgba(0, 255, 255, 0.243);
    display: flex;
    align-items: center;
    justify-content: center;
    position: relative;
-   border: 2px white solid;
+   border: 2px var(--white) solid;
 }
 
 .square:hover {
-   background-color: rgba(0, 255, 255, 0.516);
+   background-color: #7387be83;
 }
 
 .human-board .square:not([occupied-by='null']) {
-   background-color: blue;
+   background-color: var(--ship);
 }
 
 .computer-board .square[isShot='false'] {
@@ -81,7 +87,7 @@ app-container {
 }
 
 .square:not([occupied-by='null'])[isShot='true'] {
-   background-color: red;
+   background-color: var(--ship);
 }
 
 .square::before {
@@ -121,7 +127,7 @@ app-container {
 .ship-square {
    height: var(--square-size);
    width: var(--square-size);
-   background-color: rgb(175, 0, 0);
+   background-color: var(--ship);
    border: 2px rgb(241, 74, 74) solid;
 }
 
@@ -130,8 +136,12 @@ app-container {
    flex-direction: column;
    justify-content: start;
    width: 400px;
+   height: 400px;
    position: relative;
    gap: 1rem;
+   background-color: var(--transparent);
+   padding: 1rem;
+   border-radius: 1rem;
 }
 
 .ships {
@@ -150,18 +160,18 @@ app-container {
    border-radius: 3px;
    padding: 12px 24px;
    border: 0;
-   color: #3a4149;
-   background: #e7ebee;
+   color: var(--ship);
+   background: var(--white);
    line-height: 1.15;
    font-size: 16px;
    position: absolute;
-   right: 0;
-   bottom: 0;
+   right: 1rem;
+   bottom: 1rem;
 }
 
 .start-button:hover {
    transition: all 0.1s ease;
-   box-shadow: 0 0 0 0 #fff, 0 0 0 3px #1de9b6;
+   /* box-shadow: 0 0 0 0 #fff, 0 0 0 3px var(--ship); */
 }
 
 .hide {
@@ -169,7 +179,7 @@ app-container {
 }
 
 .drag-over {
-   background-color: rgba(0, 255, 255, 0.516);
+   background-color: var(--ship);
 }
 
 .board-container {
@@ -233,4 +243,8 @@ app-container {
    grid-template-rows: auto auto;
    gap: 5px;
    align-items: center;
+}
+
+b {
+   font-weight: 700;
 }
