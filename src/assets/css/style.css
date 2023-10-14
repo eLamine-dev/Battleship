@@ -5,10 +5,10 @@
 :root {
    --board-size: 0;
    --square-size: 35px;
-   --ship: #2563eb;
+   --ship: #1e40af;
    --hitShip: #dc2626;
-   --borderColor: #bfdbfe;
-   --transparent: #1e40af58;
+   --borderColor: #e2e8f0;
+   --transparent: #0206179f;
    --white: #e2e8f0;
 }
 
@@ -132,7 +132,7 @@ app-container {
    height: var(--square-size);
    width: var(--square-size);
    background-color: var(--ship);
-   border: 1px #c1c3ff solid;
+   border: 1px var(--borderColor) solid;
 }
 
 .ships-container {
@@ -153,7 +153,7 @@ app-container {
    align-items: start;
    justify-content: center;
    flex-direction: column;
-   gap: 3px;
+   gap: 8px;
 }
 
 .start-button,
@@ -276,9 +276,8 @@ b {
 
 .end-dialog {
    padding: 1.4rem;
-
    border-radius: 1rem;
-   background-color: #1e293b;
+   background-color: #020617;
    color: var(--white);
    border: none;
    box-shadow: 0 0 10px var(--borderColor);
